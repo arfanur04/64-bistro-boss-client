@@ -4,12 +4,18 @@ const NavBar = () => {
 			<li>
 				<a>Item 1</a>
 			</li>
+			<li>
+				<a>Item 2</a>
+			</li>
+			<li>
+				<a>Item 3</a>
+			</li>
 		</>
 	);
 
 	return (
 		<>
-			<div className="navbar bg-base-100">
+			<div className="fixed z-10 max-w-screen-xl text-white bg-black navbar bg-opacity-30">
 				<div className="navbar-start">
 					<div className="dropdown">
 						<div
