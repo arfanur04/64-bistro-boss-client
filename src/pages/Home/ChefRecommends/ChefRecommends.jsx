@@ -1,9 +1,9 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
-import useFetchData from "../../../hooks/useFetchData";
+import useMenuItems from "../../../hooks/useMenuItems";
 import FoodCard from "../../Shared/FoodCard/FoodCard";
 
 const ChefRecommends = () => {
-	const menuItems = useFetchData().slice(0, 3);
+	const menuItems = useMenuItems().slice(0, 3);
 
 	return (
 		<section className="mb-12">
