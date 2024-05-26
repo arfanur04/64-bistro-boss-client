@@ -6,15 +6,13 @@ import ChefRecommends from "../ChefRecommends/ChefRecommends";
 import Featured from "../Featured/Featured";
 import Testimonials from "../Testimonials/Testimonials";
 import CallUs from "../CallUs/CallUs";
+import { websiteTitle } from "../../../providers/AuthProvider";
 
 const Home = () => {
 	return (
 		<>
 			<Helmet>
-				<title>
-					{/* {websiteTitle} */}
-					Bistro Boss
-				</title>
+				<title>{websiteTitle} - Home</title>
 			</Helmet>
 			<div>
 				<Banner />
