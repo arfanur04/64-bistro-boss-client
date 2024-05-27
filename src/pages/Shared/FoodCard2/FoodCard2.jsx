@@ -1,4 +1,4 @@
-const FoodCard = ({ item }) => {
+const FoodCard2 = ({ item }) => {
 	const { image, name, recipe } = item;
 	return (
 		<div className="rounded-none shadow-xl card bg-base-100">
@@ -22,4 +22,4 @@ const FoodCard = ({ item }) => {
 	);
 };
 
-export default FoodCard;
+export default FoodCard2;

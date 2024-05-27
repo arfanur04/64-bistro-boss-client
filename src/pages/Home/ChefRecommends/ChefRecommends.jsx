@@ -1,6 +1,6 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useData from "../../../hooks/useData";
-import FoodCard from "../../Shared/FoodCard/FoodCard";
+import FoodCard2 from "../../Shared/FoodCard2/FoodCard2";
 
 const ChefRecommends = () => {
 	const [menu] = useData(`menu.json`);
@@ -14,10 +14,10 @@ const ChefRecommends = () => {
 			></SectionTitle>
 			<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{sliceMenu?.map((item) => (
-					<FoodCard
+					<FoodCard2
 						key={item._id}
 						item={item}
-					></FoodCard>
+					></FoodCard2>
 				))}
 			</div>
 		</section>

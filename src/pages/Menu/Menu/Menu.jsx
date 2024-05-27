@@ -24,7 +24,7 @@ const Menu = () => {
 				<title>{websiteTitle} - Menu</title>
 			</Helmet>
 
-			{/* main cover */}
+			{/* ------------------------------- main cover ------------------------------- */}
 			<Cover
 				img={menuBg}
 				title={"Our Menu"}
@@ -35,10 +35,10 @@ const Menu = () => {
 				heading={"Today's Offer"}
 			/>
 
-			{/* offered menu items */}
+			{/* --------------------------- offered menu items --------------------------- */}
 			<MenuCategory items={offered} />
 
-			{/* dessert menu items */}
+			{/* --------------------------- dessert menu items --------------------------- */}
 			<MenuCategory
 				items={desserts}
 				title={"Dessert"}
