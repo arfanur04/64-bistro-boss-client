@@ -1,9 +1,9 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
-import useMenu from "../../../hooks/useMenu";
+import useData from "../../../hooks/useData";
 import FoodCard from "../../Shared/FoodCard/FoodCard";
 
 const ChefRecommends = () => {
-	const [menu] = useMenu();
+	const [menu] = useData(`menu.json`);
 	const sliceMenu = menu.slice(0, 3);
 
 	return (
