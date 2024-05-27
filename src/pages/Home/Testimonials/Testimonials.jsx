@@ -7,12 +7,12 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation } from "swiper/modules";
-import useReviews from "../../../hooks/useReviews";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import useData from "../../../hooks/useData";
 
 const Testimonials = () => {
-	const reviews = useReviews();
+	const [reviews] = useData(`reviews.json`);
 
 	return (
 		<section className="my-20">
