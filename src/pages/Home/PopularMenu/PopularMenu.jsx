@@ -1,4 +1,4 @@
-import SectionButton from "../../../components/SectionButton/SectionButton";
+import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useData from "../../../hooks/useData";
 import MenuItem from "../../Shared/MenuItem/MenuItem";
@@ -22,7 +22,7 @@ const PopularMenu = () => {
 					></MenuItem>
 				))}
 			</div>
-			<SectionButton text={"View Full Menu"} />
+			<PrimaryButton text={"View Full Menu"} />
 		</section>
 	);
 };

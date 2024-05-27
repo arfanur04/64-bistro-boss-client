@@ -1,4 +1,4 @@
-import SectionButton from "../../../components/SectionButton/SectionButton";
+import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import Cover from "../../Shared/Cover/Cover";
 import MenuItem from "../../Shared/MenuItem/MenuItem";
 
@@ -19,7 +19,10 @@ const MenuCategory = ({ items, title, img }) => {
 					></MenuItem>
 				))}
 			</div>
-			<SectionButton text={"ORDER YOUR FAVORITE FOOD"} />
+			<PrimaryButton
+				text={"ORDER YOUR FAVORITE FOOD"}
+				route={title ? `/order/${title}` : ""}
+			/>
 		</div>
 	);
 };
