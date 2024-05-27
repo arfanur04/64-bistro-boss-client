@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
+import { apiURL } from "../providers/AuthProvider";
 
-const useData = (url) => {
+const useFetch = (route) => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		fetch(url)
+		console.log(route);
+		fetch(`${apiURL}${route}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setData(data);
 				setLoading(false);
 			});
-	}, [url]);
+	}, [route]);
 	return [data, loading];
 };
 
-export default useData;
+export default useFetch;

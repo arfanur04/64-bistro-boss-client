@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { apiURL } from "../providers/AuthProvider";
 
-const useMenu = () => {
-	const [menu, setMenu] = useState([]);
+const useReviews = () => {
+	const [reviews, setReviews] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		fetch(`${apiURL}/menu`)
+		fetch(`${apiURL}/reviews`)
 			.then((res) => res.json())
 			.then((data) => {
-				setMenu(data);
+				setReviews(data);
 				setLoading(false);
 			});
 	}, []);
-	return [menu, loading];
+	return [reviews, loading];
 };
 
-export default useMenu;
+export default useReviews;

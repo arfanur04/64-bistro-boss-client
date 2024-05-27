@@ -6,12 +6,12 @@ import desertImg from "../../../assets/menu/dessert-bg.jpeg";
 import pizzaImg from "../../../assets/menu/pizza-bg.jpg";
 import soupImg from "../../../assets/menu/salad-bg.jpg";
 import saladImg from "../../../assets/menu/salad-bg.jpg";
-import useData from "../../../hooks/useData";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import MenuCategory from "../MenuCategory/MenuCategory";
+import useMenu from "../../../hooks/useMenu";
 
 const Menu = () => {
-	const [menu] = useData(`menu.json`);
+	const [menu] = useMenu();
 	const desserts = menu.filter((item) => item.category === "dessert");
 	const soup = menu.filter((item) => item.category === "soup");
 	const salad = menu.filter((item) => item.category === "salad");

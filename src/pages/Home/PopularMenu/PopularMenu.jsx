@@ -1,11 +1,10 @@
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
-import useData from "../../../hooks/useData";
+import useMenu from "../../../hooks/useMenu";
 import MenuItem from "../../Shared/MenuItem/MenuItem";
 
 const PopularMenu = () => {
-	// const [menu] = useMenu();
-	const [menu] = useData(`menu.json`);
+	const [menu] = useMenu();
 	const popular = menu.filter((item) => item.category === "popular");
 
 	return (

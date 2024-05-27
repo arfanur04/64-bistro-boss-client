@@ -9,10 +9,10 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import useData from "../../../hooks/useData";
+import useReviews from "../../../hooks/useReviews";
 
 const Testimonials = () => {
-	const [reviews] = useData(`reviews.json`);
+	const [reviews] = useReviews();
 
 	return (
 		<section className="my-20">
