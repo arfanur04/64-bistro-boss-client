@@ -28,6 +28,14 @@ const NavBar = () => {
 
 			{user ? (
 				<>
+					<span>{user?.displayName}</span>
+					<div>
+						<img
+							className="w-12 border btn-circle"
+							src={user?.photoURL}
+							alt=""
+						/>
+					</div>
 					<button
 						onClick={handleLogOut}
 						className="btn btn-ghost btn-sm"
