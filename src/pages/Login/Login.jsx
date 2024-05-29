@@ -1,7 +1,20 @@
 import { Helmet } from "react-helmet-async";
 import { websiteTitle } from "../../providers/AuthProvider";
+import {
+	loadCaptchaEnginge,
+	LoadCanvasTemplate,
+	validateCaptcha,
+} from "react-simple-captcha";
+import { useEffect, useRef, useState } from "react";
 
 const Login = () => {
+	const captchaRef = useRef(null);
+	const [disabled, setDisabled] = useState(true);
+
+	useEffect(() => {
+		loadCaptchaEnginge(6);
+	}, []);
+
 	const handleLogin = (e) => {
 		e.preventDefault();
 		const form = e.target;
@@ -9,6 +22,16 @@ const Login = () => {
 		const password = form.password.value;
 		console.log(email, password);
 	};
+
+	const handleValidateCaptcha = () => {
+		const user_captcha_value = captchaRef.current.value;
+		if (validateCaptcha(user_captcha_value)) {
+			setDisabled(false);
+		} else {
+			setDisabled(true);
+		}
+	};
+
 	return (
 		<>
 			<Helmet>
@@ -61,8 +84,27 @@ const Login = () => {
 									</a>
 								</label>
 							</div>
+							<div className="form-control">
+								<label className="label">
+									<LoadCanvasTemplate />
+								</label>
+								<input
+									type="text"
+									name="captcha"
+									ref={captchaRef}
+									placeholder="type the captcha above"
+									className="input input-bordered"
+								/>
+								<button
+									onClick={handleValidateCaptcha}
+									className="mt-2 btn btn-outline btn-xs"
+								>
+									Validate
+								</button>
+							</div>
 							<div className="mt-6 form-control">
 								<input
+									disabled={disabled}
 									className="btn btn-primary"
 									type="submit"
 									value="Login"
