@@ -5,14 +5,14 @@ import {
 	LoadCanvasTemplate,
 	validateCaptcha,
 } from "react-simple-captcha";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
-	const captchaRef = useRef(null);
 	const [disabled, setDisabled] = useState(true);
 
-	const { signIn, logOut } = useContext(AuthContext);
+	const { signIn } = useContext(AuthContext);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -23,6 +23,24 @@ const Login = () => {
 
 		signIn(email, password)
 			.then((result) => {
+				Swal.fire({
+					title: "User Login Successful",
+					showClass: {
+						popup: `
+                   animate__animated
+                   animate__fadeInUp
+                   animate__faster
+                 `,
+					},
+					hideClass: {
+						popup: `
+                   animate__animated
+                   animate__fadeOutDown
+                   animate__faster
+                 `,
+					},
+				});
+
 				const user = result.user;
 				console.log(`user:`, user);
 			})
@@ -35,8 +53,8 @@ const Login = () => {
 		loadCaptchaEnginge(6);
 	}, []);
 
-	const handleValidateCaptcha = () => {
-		const user_captcha_value = captchaRef.current.value;
+	const handleValidateCaptcha = (e) => {
+		const user_captcha_value = e.target.value;
 		if (validateCaptcha(user_captcha_value)) {
 			setDisabled(false);
 		} else {
@@ -101,18 +119,12 @@ const Login = () => {
 									<LoadCanvasTemplate />
 								</label>
 								<input
+									onBlur={handleValidateCaptcha}
 									type="text"
 									name="captcha"
-									ref={captchaRef}
 									placeholder="type the captcha above"
 									className="input input-bordered"
 								/>
-								<button
-									onClick={handleValidateCaptcha}
-									className="mt-2 btn btn-outline btn-xs"
-								>
-									Validate
-								</button>
 							</div>
 							<div className="mt-6 form-control">
 								<input
