@@ -1,7 +1,18 @@
 import { Helmet } from "react-helmet-async";
 import { websiteTitle } from "../../providers/AuthProvider";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+
+	const onSubmit = (data) => {
+		console.log(data);
+	};
+
 	return (
 		<>
 			<Helmet>
@@ -18,7 +29,10 @@ const SignUp = () => {
 						</p>
 					</div>
 					<div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100">
-						<form className="card-body">
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className="card-body"
+						>
 							<div className="form-control">
 								<label className="label">
 									<span className="label-text">Name</span>
@@ -26,10 +40,13 @@ const SignUp = () => {
 								<input
 									type="name"
 									name="name"
+									{...register("name", { required: true })}
 									placeholder="name"
 									className="input input-bordered"
-									required
 								/>
+								{errors.name && (
+									<span className="text-red-600">Name is required</span>
+								)}
 							</div>
 							<div className="form-control">
 								<label className="label">
@@ -38,10 +55,13 @@ const SignUp = () => {
 								<input
 									type="email"
 									name="email"
+									{...register("email", { required: true })}
 									placeholder="email"
 									className="input input-bordered"
-									required
 								/>
+								{errors.email && (
+									<span className="text-red-600">Email is required</span>
+								)}
 							</div>
 							<div className="form-control">
 								<label className="label">
@@ -50,10 +70,17 @@ const SignUp = () => {
 								<input
 									type="password"
 									name="password"
+									{...register("password", {
+										required: true,
+										minLength: 6,
+										maxLength: 20,
+									})}
 									placeholder="password"
 									className="input input-bordered"
-									required
 								/>
+								{errors.password?.type === "required" && (
+									<p className="text-red-600">Password is required</p>
+								)}
 								<label className="label">
 									<a
 										href="#"
