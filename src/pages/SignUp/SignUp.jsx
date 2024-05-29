@@ -1,16 +1,38 @@
 import { Helmet } from "react-helmet-async";
-import { websiteTitle } from "../../providers/AuthProvider";
+import { AuthContext, websiteTitle } from "../../providers/AuthProvider";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
+	const { createUser } = useContext(AuthContext);
+
 	const {
 		register,
 		handleSubmit,
+		reset,
+		getValues,
 		formState: { errors },
 	} = useForm();
 
 	const onSubmit = (data) => {
 		console.log(data);
+		createUser(data.email, data.password)
+			.then((result) => {
+				const user = result.user;
+				console.log(`user:`, user);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const handleReset = () => {
+		const emptyValues = Object.keys(getValues()).reduce((acc, key) => {
+			acc[key] = "";
+			return acc;
+		}, {});
+		reset(emptyValues);
 	};
 
 	return (
@@ -74,12 +96,24 @@ const SignUp = () => {
 										required: true,
 										minLength: 6,
 										maxLength: 20,
+										pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
 									})}
 									placeholder="password"
 									className="input input-bordered"
 								/>
-								{errors.password?.type === "required" && (
-									<p className="text-red-600">Password is required</p>
+								{errors.password?.type === "minLength" && (
+									<p className="text-red-600">Password must be 6 character</p>
+								)}
+								{errors.password?.type === "maxLength" && (
+									<p className="text-red-600">
+										Password must be less than character
+									</p>
+								)}
+								{errors.password?.type === "pattern" && (
+									<p className="text-red-600">
+										Password must have one uppercase, one lowercase, one number,
+										and one special characters
+									</p>
 								)}
 								<label className="label">
 									<a
@@ -90,10 +124,33 @@ const SignUp = () => {
 									</a>
 								</label>
 							</div>
+							<div>
+								<input
+									className="link"
+									type="button"
+									value="Reset"
+									onClick={handleReset}
+								/>
+							</div>
 							<div className="mt-6 form-control">
-								<button className="btn btn-primary">SignUp</button>
+								<input
+									className="btn btn-primary"
+									type="submit"
+									value="SignUp"
+								/>
 							</div>
 						</form>
+						<p>
+							<small>
+								Already have a account?{" "}
+								<Link
+									className="link"
+									to={"/login"}
+								>
+									Login
+								</Link>
+							</small>
+						</p>
 					</div>
 				</div>
 			</div>
