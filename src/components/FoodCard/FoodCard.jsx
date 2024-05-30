@@ -1,10 +1,33 @@
 import SecondaryButton from "../SecondaryButton/SecondaryButton";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const FoodCard = ({ item }) => {
 	const { name, image, price, recipe } = item;
+	const { user } = useAuth();
+	const navigate = useNavigate();
 
 	const handleAddToCart = (food) => {
-		console.log(food);
+		console.log(food, user?.email);
+		if (user && user.email) {
+			// send cart item to database
+		} else {
+			Swal.fire({
+				title: "You are not logged in",
+				text: "Please login to add to the cart",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, login",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// send to the user to the login page
+					navigate("/login");
+				}
+			});
+		}
 	};
 
 	return (
