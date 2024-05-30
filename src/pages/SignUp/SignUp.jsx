@@ -18,18 +18,18 @@ const SignUp = () => {
 	} = useForm();
 
 	const onSubmit = (data) => {
-		console.log(data);
+		// console.log(data);
 
 		// create user
 		createUser(data.email, data.password)
-			.then((result) => {
-				const loggedUser = result.user;
-				console.log(`loggedUser:`, loggedUser);
+			.then(() => {
+				// const loggedUser = result.user;
+				// console.log(`loggedUser:`, loggedUser);
 
 				// update profile
 				updateUserProfile(data.name, data.photoURL)
 					.then(() => {
-						console.log("User profile info update");
+						// console.log("User profile info update");
 						reset();
 						Swal.fire({
 							position: "top-end",

@@ -10,24 +10,22 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
-	const captchaRef = useRef(null);
 	const [disabled, setDisabled] = useState(true);
+	const { signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
-
 	const from = location.state?.from?.pathname || "/";
-
-	const { signIn } = useContext(AuthContext);
+	const captchaRef = useRef(null);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
 		const form = e.target;
 		const email = form.email.value;
 		const password = form.password.value;
-		console.log(email, password);
+		// console.log(email, password);
 
 		signIn(email, password)
-			.then((result) => {
+			.then(() => {
 				Swal.fire({
 					title: "User Login Successful",
 					showClass: {
@@ -46,10 +44,9 @@ const Login = () => {
 					},
 				});
 
+				// const user = result.user;
+				// console.log(`user:`, user);
 				navigate(from, { replace: true });
-
-				const user = result.user;
-				console.log(`user:`, user);
 			})
 			.catch((error) => {
 				console.error("error: ", error);
@@ -132,12 +129,12 @@ const Login = () => {
 									placeholder="type the captcha above"
 									className="input input-bordered"
 								/>
-								<div
+								<input
 									onClick={handleValidateCaptcha}
 									className="mt-2 btn btn-outline btn-xs"
-								>
-									Validate
-								</div>
+									type="button"
+									value="Validate"
+								/>
 							</div>
 							<div className="mt-6 form-control">
 								<input

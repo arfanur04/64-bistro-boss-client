@@ -1,7 +1,11 @@
 import SecondaryButton from "../SecondaryButton/SecondaryButton";
 
 const FoodCard = ({ item }) => {
-	const { _id, name, image, price, recipe } = item;
+	const { name, image, price, recipe } = item;
+
+	const handleAddToCart = (food) => {
+		console.log(food);
+	};
 
 	return (
 		<div className="shadow-xl card bg-base-100">
@@ -19,8 +23,9 @@ const FoodCard = ({ item }) => {
 				<p>{recipe}</p>
 				<div className="justify-end card-actions">
 					<SecondaryButton
+						handleAddToCart={handleAddToCart}
+						item={item}
 						text={"Add to Cart"}
-						route={`/order/${_id}`}
 					/>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
 
 const NavBar = () => {
 	const { user, logOut } = useContext(AuthContext);
@@ -25,15 +26,25 @@ const NavBar = () => {
 			<li>
 				<NavLink to={"/secret"}>Secret</NavLink>
 			</li>
+			<li>
+				<NavLink to={"/"}>
+					<button className="btn btn-sm">
+						<FaShoppingCart className="mr-2" />
+						<div className="badge badge-secondary">+0</div>
+					</button>
+				</NavLink>
+			</li>
 
 			{user ? (
 				<>
-					<span>{user?.displayName}</span>
+					{/* user image */}
 					<div>
 						<img
-							className="w-12 border btn-circle"
+							className="btn btn-sm btn-circle"
 							src={user?.photoURL}
 							alt=""
+							data-tooltip-id="my-tooltip"
+							data-tooltip-html={`${user?.displayName},<br />${user?.email}`}
 						/>
 					</div>
 					<button
@@ -83,7 +94,7 @@ const NavBar = () => {
 						</div>
 						<ul
 							tabIndex={0}
-							className="menu menu-sm dropdown-content mt-3 z-[99] p-2 shadow bg-base-100 rounded-box w-52 "
+							className="menu menu-sm dropdown-content mt-3 z-[99] p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							{navOptions}
 						</ul>
@@ -96,7 +107,9 @@ const NavBar = () => {
 					</Link>
 				</div>
 				<div className="hidden navbar-center lg:flex">
-					<ul className="px-1 menu menu-horizontal">{navOptions}</ul>
+					<ul className="items-center px-1 menu menu-horizontal">
+						{navOptions}
+					</ul>
 				</div>
 				<div className="navbar-end">
 					<a className="btn">Button</a>
