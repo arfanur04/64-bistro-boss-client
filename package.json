@@ -12,6 +12,7 @@
   "dependencies": {
     "@smastrom/react-rating": "^1.5.0",
     "aos": "^2.3.4",
+    "axios": "^1.7.2",
     "firebase": "^10.12.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",

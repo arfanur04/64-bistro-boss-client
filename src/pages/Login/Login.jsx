@@ -10,11 +10,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
-	const [disabled, setDisabled] = useState(true);
+	//: delete this useState and uncomment next one to validate reCaptcha
+	const [disabled, setDisabled] = useState(false);
+
+	// const [disabled, setDisabled] = useState(true);
 	const { signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const from = location.state?.from?.pathname || "/";
+	// console.log("location.state in login page", location.state);
 	const captchaRef = useRef(null);
 
 	const handleLogin = (e) => {
