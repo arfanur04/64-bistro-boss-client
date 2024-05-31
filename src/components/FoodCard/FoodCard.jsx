@@ -2,28 +2,34 @@ import SecondaryButton from "../SecondaryButton/SecondaryButton";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { apiURL } from "../../providers/AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCarts from "../../hooks/useCarts";
 
 const FoodCard = ({ item }) => {
 	const { name, image, price, recipe, _id } = item;
-	const { user } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
+	// custom hooks
+	const { user } = useAuth();
+	const axiosSecure = useAxiosSecure();
 
-	const handleAddToCart = (item) => {
+	const handleAddToCart = (/* item */) => {
 		if (user && user.email) {
 			// send cart item to database
-			console.log(item, user?.email);
+			// console.log(item, user?.email);
 			const cartItem = {
 				menuId: _id,
 				email: user.email,
 				name,
 				image,
 				price,
+				UTC: Date.now(),
+				localTime: new Date().toLocaleString(undefined, {
+					timeZoneName: "long",
+				}),
 			};
 
-			axios.post(apiURL + "/carts", cartItem).then((res) => {
+			axiosSecure.post("/carts", cartItem).then((res) => {
 				console.log(res.data);
 				if (res?.data?.insertedId) {
 					Swal.fire({
