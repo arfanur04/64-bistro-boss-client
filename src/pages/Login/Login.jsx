@@ -54,6 +54,11 @@ const Login = () => {
 			})
 			.catch((error) => {
 				console.error("error: ", error);
+				Swal.fire({
+					icon: "error",
+					title: "Oops...",
+					text: `${error.message}`,
+				});
 			});
 	};
 

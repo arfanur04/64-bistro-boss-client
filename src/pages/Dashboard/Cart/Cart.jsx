@@ -1,18 +1,54 @@
+import { FaTrash } from "react-icons/fa6";
 import useCarts from "../../../hooks/useCarts";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Cart = () => {
-	const [cart] = useCarts();
+	const [cart, refetch] = useCarts();
 	const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+	const axiosSecure = useAxiosSecure();
+
+	const handleDelete = (id) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Yes, delete it!",
+			cancelButtonText: "No, cancel!",
+			reverseButtons: true,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Code to execute when confirmed
+				axiosSecure
+					.delete(`/carts/${id}`)
+					.then((res) => {
+						if (res.data.deletedCount > 0) {
+							Swal.fire("Deleted!", "Your file has been deleted.", "success");
+							refetch();
+						}
+					})
+					.catch((error) => {
+						console.error("error: ", error);
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: `${error.message}`,
+						});
+					});
+			}
+		});
+	};
 
 	return (
 		<div>
-			<div className="flex justify-evenly">
+			<div className="flex justify-evenly mb-8">
 				<h2 className="text-4xl">Items: {cart.length}</h2>
 				<h2 className="text-4xl">Total Price : {totalPrice}</h2>
 				<button className="btn btn-primary">Pay</button>
 			</div>
-			<div className="overflow-x-auto">
-				<table className="table">
+			<div className="overflow-x-auto ">
+				<table className="table w-full">
 					{/* head */}
 					<thead>
 						<tr>
@@ -24,16 +60,9 @@ const Cart = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{cart.map((item) => (
+						{cart.map((item, index) => (
 							<tr key={item._id}>
-								<th>
-									<label>
-										<input
-											type="checkbox"
-											className="checkbox"
-										/>
-									</label>
-								</th>
+								<th>{index + 1}</th>
 								<td>
 									<div className="flex items-center gap-3">
 										<div className="avatar">
@@ -44,22 +73,17 @@ const Cart = () => {
 												/>
 											</div>
 										</div>
-										<div>
-											<div className="font-bold">Hart Hagerty</div>
-											<div className="text-sm opacity-50">United States</div>
-										</div>
 									</div>
 								</td>
-								<td>
-									Zemlak, Daniel and Leannon
-									<br />
-									<span className="badge badge-ghost badge-sm">
-										Desktop Support Technician
-									</span>
-								</td>
-								<td>Purple</td>
+								<td>{item.name}</td>
+								<td>${item.price}</td>
 								<th>
-									<button className="btn btn-ghost btn-xs">details</button>
+									<button
+										onClick={() => handleDelete(item._id)}
+										className="btn btn-ghost"
+									>
+										<FaTrash className="text-red-600 text-lg" />
+									</button>
 								</th>
 							</tr>
 						))}
