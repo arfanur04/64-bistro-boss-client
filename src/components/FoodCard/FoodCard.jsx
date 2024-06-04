@@ -23,7 +23,8 @@ const FoodCard = ({ item }) => {
 				name,
 				image,
 				price,
-				UTC: Date.now(),
+				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
 				localTime: new Date().toLocaleString(undefined, {
 					timeZoneName: "long",
 				}),
