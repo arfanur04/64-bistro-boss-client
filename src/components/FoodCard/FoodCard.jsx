@@ -25,7 +25,7 @@ const FoodCard = ({ item }) => {
 				price,
 				createdAt: new Date().toISOString(),
 				updatedAt: new Date().toISOString(),
-				localTime: new Date().toLocaleString(undefined, {
+				updatedLocal: new Date().toLocaleString(undefined, {
 					timeZoneName: "long",
 				}),
 			};

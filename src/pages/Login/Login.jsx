@@ -8,11 +8,13 @@ import {
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
+	const axiosPublic = useAxiosPublic();
 	//: delete this useState and uncomment next one to validate reCaptcha
 	const [disabled, setDisabled] = useState(false);
-
 	// const [disabled, setDisabled] = useState(true);
 	const { signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
@@ -27,30 +29,41 @@ const Login = () => {
 		const email = form.email.value;
 		const password = form.password.value;
 		// console.log(email, password);
-
 		signIn(email, password)
-			.then(() => {
-				Swal.fire({
-					title: "User Login Successful",
-					showClass: {
-						popup: `
-                   animate__animated
-                   animate__fadeInUp
-                   animate__faster
-                 `,
-					},
-					hideClass: {
-						popup: `
-                   animate__animated
-                   animate__fadeOutDown
-                   animate__faster
-                 `,
-					},
+			.then((result) => {
+				const user = result.user;
+				const userInfo = {
+					name: user.displayName,
+					email: user.email,
+					//
+					updatedAt: new Date().toISOString(),
+					updatedLocal: new Date().toLocaleString(undefined, {
+						timeZoneName: "long",
+					}),
+				};
+				axiosPublic.post("/users", userInfo).then((res) => {
+					// console.log(res.data);
+					if (res.data[1].modifiedCount > 0) {
+						Swal.fire({
+							title: "User Login Successful",
+							showClass: {
+								popup: `
+								 animate__animated
+								 animate__fadeInUp
+								 animate__faster
+							  `,
+							},
+							hideClass: {
+								popup: `
+								 animate__animated
+								 animate__fadeOutDown
+								 animate__faster
+							  `,
+							},
+						});
+						navigate(from, { replace: true });
+					}
 				});
-
-				// const user = result.user;
-				// console.log(`user:`, user);
-				navigate(from, { replace: true });
 			})
 			.catch((error) => {
 				console.error("error: ", error);
@@ -81,16 +94,12 @@ const Login = () => {
 				<title>{websiteTitle} - Login</title>
 			</Helmet>
 			<div className="min-h-screen hero bg-base-200">
-				<div className="flex-col hero-content lg:flex-row-reverse">
-					<div className="text-center md:w-1/2 lg:text-left">
+				<div className="flex-col justify-center w-full hero-content lg:flex-row-reverse">
+					<div className="max-w-sm text-center md:w-1/2 lg:text-left">
 						<h1 className="text-5xl font-bold">Login now!</h1>
-						<p className="py-6">
-							Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-							excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-							et a id nisi.
-						</p>
+						<p className="py-6"></p>
 					</div>
-					<div className="max-w-sm shadow-2xl md:w-1/2 card bg-base-100">
+					<div className="w-full max-w-sm shadow-2xl md:w-1/2 card bg-base-100 shrink-0">
 						<form
 							onSubmit={handleLogin}
 							className="card-body"
@@ -155,11 +164,18 @@ const Login = () => {
 							</div>
 						</form>
 
-						<p>
+						<p className="px-8">
 							<small>
-								New Here? <Link to={"/sign-up"}>Create an Account</Link>
+								New Here?{" "}
+								<Link
+									className="font-bold link text-primary"
+									to={"/sign-up"}
+								>
+									Create an Account
+								</Link>
 							</small>
 						</p>
+						<SocialLogin />
 					</div>
 				</div>
 			</div>

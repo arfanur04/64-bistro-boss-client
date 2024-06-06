@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
 	const axiosPublic = useAxiosPublic();
@@ -23,18 +24,14 @@ const SignUp = () => {
 		createUser(data.email, data.password)
 			.then(() => {
 				// const loggedUser = result.user;
-				// console.log(`loggedUser:`, loggedUser);
-
 				updateUserProfile(data.name, data.photoURL)
 					.then(() => {
-						// create user entry in the database
-
 						const userInfo = {
 							name: data.name,
 							email: data.email,
 							createdAt: new Date().toISOString(),
 							updatedAt: new Date().toISOString(),
-							localTime: new Date().toLocaleString(undefined, {
+							updatedLocal: new Date().toLocaleString(undefined, {
 								timeZoneName: "long",
 							}),
 						};
@@ -61,10 +58,20 @@ const SignUp = () => {
 					})
 					.catch((error) => {
 						console.error("error: ", error);
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: `${error.message}`,
+						});
 					});
 			})
 			.catch((error) => {
 				console.log(error);
+				Swal.fire({
+					icon: "error",
+					title: "Oops...",
+					text: `${error.message}`,
+				});
 			});
 	};
 
@@ -82,16 +89,12 @@ const SignUp = () => {
 				<title>{websiteTitle} - SignUp</title>
 			</Helmet>
 			<div className="min-h-screen hero bg-base-200">
-				<div className="flex-col hero-content lg:flex-row-reverse">
-					<div className="text-center lg:text-left">
+				<div className="flex-col w-full hero-content lg:flex-row-reverse">
+					<div className="max-w-sm text-center lg:text-left md:w-1/2">
 						<h1 className="text-5xl font-bold">Sign up now!</h1>
-						<p className="py-6">
-							Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-							excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-							et a id nisi.
-						</p>
+						<p className="py-6"></p>
 					</div>
-					<div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100">
+					<div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100 md:w-1/2">
 						<form
 							onSubmit={handleSubmit(onSubmit)}
 							className="card-body"
@@ -199,17 +202,18 @@ const SignUp = () => {
 								/>
 							</div>
 						</form>
-						<p>
+						<p className="px-8">
 							<small>
 								Already have a account?{" "}
 								<Link
-									className="link"
+									className="font-bold link text-primary"
 									to={"/login"}
 								>
 									Login
 								</Link>
 							</small>
 						</p>
+						<SocialLogin />
 					</div>
 				</div>
 			</div>

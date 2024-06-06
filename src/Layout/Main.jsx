@@ -10,8 +10,8 @@ const Main = () => {
 		location.pathname.includes("sign-up");
 	return (
 		<div>
-			{/* {noHeaderFooter || <NavBar />} */}
 			<NavBar />
+			{/* {noHeaderFooter || <NavBar />} */}
 			<Outlet />
 			{noHeaderFooter || <Footer />}
 		</div>

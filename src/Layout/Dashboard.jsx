@@ -1,16 +1,24 @@
 import {
 	FaAd,
 	FaCalendar,
+	FaEnvelope,
 	FaHome,
 	FaList,
 	FaSearch,
 	FaShoppingCart,
+	FaSignOutAlt,
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useCarts from "../hooks/useCarts";
+import useAuth from "../hooks/useAuth";
+import { logoutFn } from "../utility/firebaseMethod";
 
 const Dashboard = () => {
+	const { logOut } = useAuth();
 	const [cart] = useCarts();
+
+	// todo: get isAdmin value from the database
+	// const isAdmin = true;
 
 	return (
 		<div className="flex">
@@ -48,6 +56,7 @@ const Dashboard = () => {
 						</NavLink>
 					</li>
 					{/* ----------------------------------------------- */}
+					{/* shared nav links */}
 					<div className="divider"></div>
 					<li>
 						<NavLink to={"/"}>
@@ -60,6 +69,18 @@ const Dashboard = () => {
 							<FaSearch />
 							Menu
 						</NavLink>
+					</li>
+					<li>
+						<NavLink to={"/order/salad"}>
+							<FaEnvelope />
+							Contact
+						</NavLink>
+					</li>
+					<li onClick={() => logoutFn(logOut)}>
+						<div>
+							<FaSignOutAlt />
+							LogOut
+						</div>
 					</li>
 				</ul>
 			</div>
