@@ -1,60 +1,65 @@
 import {
-	FaAd,
-	FaCalendar,
+	FaBook,
 	FaEnvelope,
 	FaHome,
 	FaList,
 	FaSearch,
-	FaShoppingCart,
 	FaSignOutAlt,
+	FaUsers,
+	FaUtensils,
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-import useCarts from "../hooks/useCarts";
 import useAuth from "../hooks/useAuth";
 import { logoutFn } from "../utility/firebaseMethod";
 
 const Dashboard = () => {
 	const { logOut } = useAuth();
-	const [cart] = useCarts();
+	// const [cart] = useCarts();
 
 	// todo: get isAdmin value from the database
-	// const isAdmin = true;
+	const isAdmin = true;
 
 	return (
 		<div className="flex">
 			{/* Dashboard sidebar */}
 			<div className="w-64 min-h-svh bg-orange-400">
 				<ul className="menu">
-					<li>
-						<NavLink to={"/dashboard/userHome"}>
-							<FaHome />
-							User Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/dashboard/userReservation"}>
-							<FaCalendar />
-							Reservation
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/dashboard/cart"}>
-							<FaShoppingCart />
-							My Cart ({cart.length})
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/dashboard/review"}>
-							<FaAd />
-							Add a Review
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/dashboard/bookings"}>
-							<FaList />
-							My Bookings
-						</NavLink>
-					</li>
+					{isAdmin ? (
+						<>
+							<li>
+								<NavLink to={"/dashboard/adminHome"}>
+									<FaHome />
+									Admin Home
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/addItems"}>
+									<FaUtensils />
+									Add Items
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/manageItems"}>
+									<FaList />
+									Manage Items
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/bookings"}>
+									<FaBook />
+									Manage Bookings
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/users"}>
+									<FaUsers />
+									All Users
+								</NavLink>
+							</li>
+						</>
+					) : (
+						<></>
+					)}
 					{/* ----------------------------------------------- */}
 					{/* shared nav links */}
 					<div className="divider"></div>
