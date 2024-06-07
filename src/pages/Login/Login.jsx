@@ -43,7 +43,7 @@ const Login = () => {
 				};
 				axiosPublic.post("/users", userInfo).then((res) => {
 					// console.log(res.data);
-					if (res.data[1].modifiedCount > 0) {
+					if (res.data[1]?.modifiedCount > 0 || res.data.insertedId) {
 						Swal.fire({
 							title: "User Login Successful",
 							showClass: {

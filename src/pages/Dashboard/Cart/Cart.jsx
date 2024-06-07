@@ -42,7 +42,7 @@ const Cart = () => {
 
 	return (
 		<div>
-			<div className="flex justify-evenly mb-8">
+			<div className="flex mb-8 justify-evenly">
 				<h2 className="text-4xl">Items: {cart.length}</h2>
 				<h2 className="text-4xl">Total Price : {totalPrice}</h2>
 				<button className="btn btn-primary">Pay</button>
@@ -66,7 +66,7 @@ const Cart = () => {
 								<td>
 									<div className="flex items-center gap-3">
 										<div className="avatar">
-											<div className="mask mask-squircle w-12 h-12">
+											<div className="w-12 h-12 mask mask-squircle">
 												<img
 													src={item.image}
 													alt="Avatar Tailwind CSS Component"
@@ -82,7 +82,7 @@ const Cart = () => {
 										onClick={() => handleDelete(item._id)}
 										className="btn btn-ghost"
 									>
-										<FaTrash className="text-red-600 text-lg" />
+										<FaTrash className="text-lg text-red-600" />
 									</button>
 								</th>
 							</tr>
