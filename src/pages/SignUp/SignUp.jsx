@@ -36,7 +36,8 @@ const SignUp = () => {
 							}),
 						};
 						axiosPublic.post("/users", userInfo).then((res) => {
-							if (res.data.insertedId) {
+							console.log(res.data);
+							if (res.data[1]?.modifiedCount > 0 || res.data.insertedId) {
 								reset();
 								Swal.fire({
 									position: "top-end",
