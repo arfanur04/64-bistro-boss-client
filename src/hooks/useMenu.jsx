@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiURL } from "../providers/AuthProvider";
+import { apiURL } from "../utility/utility";
 
 const useMenu = () => {
 	const [menu, setMenu] = useState([]);

@@ -70,15 +70,27 @@ const Dashboard = () => {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to={"/order/salad"}>
-							<FaSearch />
+						<NavLink to={"/menu"}>
+							<FaList />
 							Menu
 						</NavLink>
 					</li>
 					<li>
 						<NavLink to={"/order/salad"}>
+							<FaSearch />
+							Order Food
+						</NavLink>
+					</li>
+					{/* <li>
+						<NavLink to={"/dashboard/cart"}>
+							<FaShoppingCart />
+							Cart
+						</NavLink>
+					</li> */}
+					<li>
+						<NavLink to={"/order/salad"}>
 							<FaEnvelope />
-							Contact
+							Contact (order food)
 						</NavLink>
 					</li>
 					<li onClick={() => logoutFn(logOut)}>

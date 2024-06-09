@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { AuthContext, websiteTitle } from "../../providers/AuthProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import {
 	loadCaptchaEnginge,
 	LoadCanvasTemplate,
@@ -10,6 +10,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { websiteTitle } from "../../utility/utility";
 
 const Login = () => {
 	const axiosPublic = useAxiosPublic();

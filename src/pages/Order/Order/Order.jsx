@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { websiteTitle } from "../../../providers/AuthProvider";
 import orderCover from "../../../assets/shop/banner2.jpg";
 import Cover from "../../Shared/Cover/Cover";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import useMenu from "../../../hooks/useMenu";
 import OrderTab from "../OrderTab/OrderTab";
 import { useParams } from "react-router-dom";
+import { websiteTitle } from "../../../utility/utility";
 
 const Order = () => {
 	const categories = ["salad", "pizza", "soup", "dessert", "drinks"];

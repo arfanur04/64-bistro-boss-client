@@ -6,7 +6,7 @@ import ChefRecommends from "../ChefRecommends/ChefRecommends";
 import Featured from "../Featured/Featured";
 import Testimonials from "../Testimonials/Testimonials";
 import CallUs from "../CallUs/CallUs";
-import { websiteTitle } from "../../../providers/AuthProvider";
+import { websiteTitle } from "../../../utility/utility";
 
 const Home = () => {
 	return (

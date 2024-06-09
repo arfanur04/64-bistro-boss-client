@@ -1,16 +1,20 @@
 import { Helmet } from "react-helmet-async";
-import { websiteTitle } from "../../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaTrash, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { websiteTitle } from "../../../utility/utility";
 
 const AllUsers = () => {
 	const axiosSecure = useAxiosSecure();
 	const { data: users = [], refetch } = useQuery({
 		queryKey: ["users"],
 		queryFn: async () => {
-			const res = await axiosSecure.get("/users");
+			const res = await axiosSecure.get("/users", {
+				headers: {
+					authorization: `Bearer ${localStorage.getItem("access-token")}`,
+				},
+			});
 			return res.data;
 		},
 	});

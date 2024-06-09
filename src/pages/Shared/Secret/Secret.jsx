@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { websiteTitle } from "../../../providers/AuthProvider";
+import { websiteTitle } from "../../../utility/utility";
 
 const Secret = () => {
 	return (

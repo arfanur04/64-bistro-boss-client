@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiURL } from "../providers/AuthProvider";
+import { apiURL } from "../utility/utility";
 
 const useFetch = (route) => {
 	const [data, setData] = useState([]);

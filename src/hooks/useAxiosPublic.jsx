@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiURL } from "../providers/AuthProvider";
+import { apiURL } from "../utility/utility";
 
 export const axiosPublic = axios.create({
 	baseURL: apiURL,

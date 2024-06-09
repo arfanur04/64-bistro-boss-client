@@ -1,11 +1,12 @@
 import { Helmet } from "react-helmet-async";
-import { AuthContext, websiteTitle } from "../../providers/AuthProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import { websiteTitle } from "../../utility/utility";
 
 const SignUp = () => {
 	const axiosPublic = useAxiosPublic();
