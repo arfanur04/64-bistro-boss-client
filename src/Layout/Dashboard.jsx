@@ -11,13 +11,14 @@ import {
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { logoutFn } from "../utility/firebaseMethod";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
 	const { logOut } = useAuth();
 	// const [cart] = useCarts();
 
 	// todo: get isAdmin value from the database
-	const isAdmin = true;
+	const [isAdmin] = useAdmin();
 
 	return (
 		<div className="flex">

@@ -1,15 +1,19 @@
 import axios from "axios";
 import { apiURL } from "../utility/utility";
+import { useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
 
 export const axiosSecure = axios.create({
 	baseURL: apiURL,
 });
 
 const useAxiosSecure = () => {
+	const navigate = useNavigate();
+	const { logOut } = useAuth();
 	// request interceptors to add Authorization header for every secure call to fetch api
 	axiosSecure.interceptors.request.use(
 		function (config) {
-			console.log("request stopped by interceptors");
+			// console.log("request stopped by interceptors");
 			const token = localStorage.getItem("access_token");
 			config.headers.Authorization = `Bearer ${token}`;
 			return config;
@@ -25,9 +29,15 @@ const useAxiosSecure = () => {
 		function (response) {
 			return response;
 		},
-		(error) => {
+		async (error) => {
 			const status = error.response.status;
-			console.log("status error in the interceptors", status);
+			// console.log("status error in the interceptors", status);
+
+			if (status === 401 || status === 403) {
+				await logOut();
+				navigate("/login");
+			}
+
 			return Promise.reject(error);
 		}
 	);
