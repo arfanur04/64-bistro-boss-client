@@ -1,21 +1,24 @@
 import {
 	FaBook,
+	FaCalendar,
 	FaEnvelope,
 	FaHome,
 	FaList,
 	FaSearch,
+	FaShoppingCart,
 	FaSignOutAlt,
 	FaUsers,
 	FaUtensils,
 } from "react-icons/fa";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { logoutFn } from "../utility/firebaseMethod";
 import useAdmin from "../hooks/useAdmin";
+import useCarts from "../hooks/useCarts";
 
 const Dashboard = () => {
 	const { logOut } = useAuth();
-	// const [cart] = useCarts();
+	const [cart] = useCarts();
+	const navigate = useNavigate();
 
 	// todo: get isAdmin value from the database
 	const [isAdmin] = useAdmin();
@@ -26,6 +29,7 @@ const Dashboard = () => {
 			<div className="w-64 min-h-svh bg-orange-400">
 				<ul className="menu">
 					{isAdmin ? (
+						/* ------------------------------- admin user */
 						<>
 							<li>
 								<NavLink to={"/dashboard/adminHome"}>
@@ -59,47 +63,80 @@ const Dashboard = () => {
 							</li>
 						</>
 					) : (
-						<></>
+						/* ------------------------------- normal user */
+						<>
+							<li>
+								<NavLink to={"/dashboard/userHome"}>
+									<FaHome />
+									User Home
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/reservation"}>
+									<FaCalendar />
+									Reservation
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/cart"}>
+									<FaShoppingCart />
+									My Cart ({cart?.length})
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/addAReview"}>
+									<FaBook />
+									Add a review
+								</NavLink>
+							</li>
+							<li>
+								<NavLink to={"/dashboard/myBooking"}>
+									<FaList />
+									My Booking
+								</NavLink>
+							</li>
+						</>
 					)}
-					{/* ----------------------------------------------- */}
-					{/* shared nav links */}
 					<div className="divider"></div>
-					<li>
-						<NavLink to={"/"}>
-							<FaHome />
-							Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/menu"}>
-							<FaList />
-							Menu
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to={"/order/salad"}>
-							<FaSearch />
-							Order Food
-						</NavLink>
-					</li>
-					{/* <li>
-						<NavLink to={"/dashboard/cart"}>
-							<FaShoppingCart />
-							Cart
-						</NavLink>
-					</li> */}
-					<li>
-						<NavLink to={"/order/salad"}>
-							<FaEnvelope />
-							Contact (order food)
-						</NavLink>
-					</li>
-					<li onClick={() => logoutFn(logOut)}>
-						<div>
-							<FaSignOutAlt />
-							LogOut
-						</div>
-					</li>
+					{/* -------------------------- shared nav links */}
+					<>
+						<li>
+							<NavLink to={"/"}>
+								<FaHome />
+								Home
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to={"/menu"}>
+								<FaList />
+								Menu
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to={"/order/salad"}>
+								<FaSearch />
+								Order Food
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to={"/order/salad"}>
+								<FaEnvelope />
+								Contact (order food)
+							</NavLink>
+						</li>
+						<li
+							onClick={() => {
+								logOut()
+									.then(() => navigate("/"))
+									.catch((error) => console.error("error: ", error));
+							}}
+						>
+							<div>
+								<FaSignOutAlt />
+								LogOut
+							</div>
+						</li>
+					</>
 				</ul>
 			</div>
 			{/* Dashboard content */}

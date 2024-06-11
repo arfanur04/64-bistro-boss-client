@@ -9,7 +9,7 @@ export const axiosSecure = axios.create({
 
 const useAxiosSecure = () => {
 	const navigate = useNavigate();
-	const { logOut } = useAuth();
+	const { logOut, setLoading } = useAuth();
 	// request interceptors to add Authorization header for every secure call to fetch api
 	axiosSecure.interceptors.request.use(
 		function (config) {
@@ -32,10 +32,15 @@ const useAxiosSecure = () => {
 		async (error) => {
 			const status = error.response.status;
 			// console.log("status error in the interceptors", status);
-
 			if (status === 401 || status === 403) {
 				await logOut();
+				setLoading(false);
 				navigate("/login");
+				// logOut()
+				// 	.then(() => {
+				// 		navigate("/login");
+				// 	})
+				// 	.catch((error) => console.error("error: ", error));
 			}
 
 			return Promise.reject(error);

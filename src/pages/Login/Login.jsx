@@ -61,6 +61,7 @@ const Login = () => {
 								 animate__faster
 							  `,
 							},
+							timer: 1500,
 						});
 						navigate(from, { replace: true });
 					}
