@@ -3,7 +3,7 @@ import { apiURL } from "../utility/utility";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
-export const axiosSecure = axios.create({
+const axiosSecure = axios.create({
 	baseURL: apiURL,
 });
 
