@@ -1,7 +1,7 @@
 import axios from "axios";
 import { apiURL } from "../utility/utility";
 
-const axiosPublic = axios.create({
+export const axiosPublic = axios.create({
 	baseURL: apiURL,
 });
 
