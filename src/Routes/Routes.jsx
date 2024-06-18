@@ -13,11 +13,14 @@ import AddItems from "../pages/Dashboard/AddItems/AddItems";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import HomeRoute from "./HomeRoute";
+import ErrorPage from "../pages/Shared/ErrorPage/ErrorPage";
+import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 
 export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Main />,
+		errorElement: <ErrorPage />,
 		children: [
 			{
 				path: "/",
@@ -64,6 +67,7 @@ export const router = createBrowserRouter([
 				<Dashboard />
 			</PrivateRoute>
 		),
+		errorElement: <ErrorPage />,
 		children: [
 			// normal user routes
 			{
@@ -84,6 +88,14 @@ export const router = createBrowserRouter([
 				element: (
 					<AdminRoute>
 						<AllUsers />
+					</AdminRoute>
+				),
+			},
+			{
+				path: "manageItems",
+				element: (
+					<AdminRoute>
+						<ManageItems />
 					</AdminRoute>
 				),
 			},

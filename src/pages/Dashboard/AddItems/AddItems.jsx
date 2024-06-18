@@ -31,10 +31,10 @@ const AddItems = () => {
 				// now send the menu item to the server with the image
 				const menuItem = {
 					name: data.name,
-					category: data.category,
-					price: data.price,
 					recipe: data.recipe,
 					image: res.data.data.display_url,
+					category: data.category,
+					price: data.price,
 					//
 					createdAt: new Date().toISOString(),
 					updatedAt: new Date().toISOString(),
