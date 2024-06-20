@@ -6,6 +6,7 @@ import FaTrashAltC from "../../IconComponent/FaTrashAltC";
 import FaEditC from "../../IconComponent/FaEditC";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
 	const [menu, , refetch] = useMenu();
@@ -37,12 +38,6 @@ const ManageItems = () => {
 							timer: 1500,
 						});
 					}
-
-					// Swal.fire({
-					// 	title: "Deleted!",
-					// 	text: "Your file has been deleted.",
-					// 	icon: "success",
-					// });
 				}
 			});
 		} catch (error) {
@@ -54,6 +49,20 @@ const ManageItems = () => {
 			});
 		}
 	};
+
+	// const handleUpdateItem = async (item) => {
+	// 	try {
+	// 		console.log(item);
+	// 		// const res = await axiosSecure.patch(`/menu/${item._id}`);
+	// 	} catch (error) {
+	// 		console.error("error: ", error);
+	// 		Swal.fire({
+	// 			icon: "error",
+	// 			title: "Oops ...",
+	// 			text: `${error.message}`,
+	// 		});
+	// 	}
+	// };
 
 	return (
 		<>
@@ -98,9 +107,11 @@ const ManageItems = () => {
 										<td>{item.name}</td>
 										<td className="text-right">${item.price}</td>
 										<td>
-											<button className="bg-orange-500 btn btn-ghost">
-												<FaEditC />
-											</button>
+											<Link to={`/dashboard/updateItem/${item._id}`}>
+												<button className="bg-orange-500 btn btn-ghost">
+													<FaEditC />
+												</button>
+											</Link>
 										</td>
 										<td>
 											<button

@@ -15,6 +15,8 @@ import PrivateRoute from "./PrivateRoute";
 import HomeRoute from "./HomeRoute";
 import ErrorPage from "../pages/Shared/ErrorPage/ErrorPage";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
+import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
+import { apiURL } from "../utility/utility";
 
 export const router = createBrowserRouter([
 	{
@@ -84,18 +86,27 @@ export const router = createBrowserRouter([
 				),
 			},
 			{
-				path: "users",
-				element: (
-					<AdminRoute>
-						<AllUsers />
-					</AdminRoute>
-				),
-			},
-			{
 				path: "manageItems",
 				element: (
 					<AdminRoute>
 						<ManageItems />
+					</AdminRoute>
+				),
+			},
+			{
+				path: "updateItem/:id",
+				element: (
+					<AdminRoute>
+						<UpdateItem />
+					</AdminRoute>
+				),
+				loader: ({ params }) => fetch(`${apiURL}/menu/${params.id}`),
+			},
+			{
+				path: "users",
+				element: (
+					<AdminRoute>
+						<AllUsers />
 					</AdminRoute>
 				),
 			},

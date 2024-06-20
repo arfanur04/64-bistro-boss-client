@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { websiteTitle } from "../../../utility/utility";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+import { useLoaderData } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FaUtensils } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -10,9 +10,10 @@ import axios from "axios";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-const AddItems = () => {
-	const { register, handleSubmit, reset } = useForm();
+const UpdateItem = () => {
+	const { _id, name, category, recipe, price, image } = useLoaderData();
 	const axiosSecure = useAxiosSecure();
+	const { register, handleSubmit, reset } = useForm();
 
 	const onSubmit = async (data) => {
 		try {
@@ -20,6 +21,7 @@ const AddItems = () => {
 
 			// image upload to ImgBB and then get the url
 			const imageFile = { image: data.image[0] };
+
 			const res = await axios.post(image_hosting_api, imageFile, {
 				headers: {
 					"Content-Type": "multipart/form-data",
@@ -36,22 +38,22 @@ const AddItems = () => {
 					category: data.category,
 					price: +data.price,
 					//
-					createdAt: new Date().toISOString(),
+					// createdAt: new Date().toISOString(),
 					updatedAt: new Date().toISOString(),
 					updatedLocal: new Date().toLocaleString(undefined, {
 						timeZoneName: "long",
 					}),
 				};
 				//
-				const menuRes = await axiosSecure.post("/menu", menuItem);
+				const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
 				console.log("mongoDb", menuRes.data);
 
-				if (menuRes.data.insertedId) {
+				if (menuRes.data.modifiedCount > 0) {
 					// show success message
 					Swal.fire({
 						position: "top-end",
 						icon: "success",
-						title: `${data.name} is added to the menu`,
+						title: `${data.name} is updated to the menu`,
 						showConfirmButton: false,
 						timer: 1500,
 					});
@@ -62,15 +64,16 @@ const AddItems = () => {
 			console.error("error: ", error);
 		}
 	};
+
 	return (
 		<>
 			<Helmet>
-				<title>{websiteTitle} - AddItems</title>
+				<title>{websiteTitle} - UpdateItem</title>
 			</Helmet>
 			<div>
 				<SectionTitle
-					heading={"add a item"}
-					subHeading={"What's New?"}
+					heading={"Update an Item"}
+					subHeading={"Update Info"}
 				/>
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
@@ -81,6 +84,7 @@ const AddItems = () => {
 							<input
 								{...register("name", { required: true })}
 								type="text"
+								defaultValue={name}
 								placeholder="Type here"
 								className="w-full input input-bordered"
 							/>
@@ -92,7 +96,7 @@ const AddItems = () => {
 									<span className="label-text">Category*</span>
 								</div>
 								<select
-									defaultValue={""}
+									defaultValue={category}
 									{...register("category", { required: true })}
 									className="w-full select select-bordered"
 								>
@@ -117,6 +121,7 @@ const AddItems = () => {
 								<input
 									{...register("price", { required: true })}
 									type="number"
+									defaultValue={price}
 									placeholder="Type here"
 									className="w-full input input-bordered"
 								/>
@@ -128,21 +133,28 @@ const AddItems = () => {
 								<span className="label-text">Recipe Details</span>
 							</div>
 							<textarea
+								defaultValue={recipe}
 								{...register("recipe")}
 								className="h-24 textarea textarea-bordered"
 								placeholder="Bio"
 							></textarea>
 						</label>
 						<div className="w-full my-6 form-control">
+							<div className="flex items-center gap-6 mb-2">
+								<p className="font-semibold text-md">Previous Image:</p>
+								<img
+									className="w-24"
+									src={image}
+									alt=""
+								/>
+							</div>
 							<input
 								{...register("image", { required: true })}
 								type="file"
 								className="w-full max-w-xs file-input"
 							/>
 						</div>
-						<button className="btn">
-							Add Item <FaUtensils className="ml-4" />
-						</button>
+						<button className="btn btn-outline">Update Menu Item</button>
 					</form>
 				</div>
 			</div>
@@ -150,4 +162,4 @@ const AddItems = () => {
 	);
 };
 
-export default AddItems;
+export default UpdateItem;
