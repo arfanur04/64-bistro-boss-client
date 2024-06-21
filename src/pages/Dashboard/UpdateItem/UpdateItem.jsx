@@ -27,6 +27,7 @@ const UpdateItem = () => {
 		},
 	});
 	const { _id, name, category, recipe, price, image } = item;
+	refetch();
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -37,7 +38,6 @@ const UpdateItem = () => {
 	};
 
 	const { register, handleSubmit, reset } = useForm();
-
 	const onSubmit = async (data) => {
 		try {
 			console.log("hook form", data);
@@ -58,7 +58,6 @@ const UpdateItem = () => {
 					name: data.name,
 					recipe: data.recipe,
 					image: res.data.data.display_url,
-					delete_url: res.data.data.delete_url,
 					category: data.category,
 					price: +data.price,
 					//
@@ -160,7 +159,7 @@ const UpdateItem = () => {
 							</div>
 							<textarea
 								defaultValue={recipe}
-								{...register("recipe")}
+								{...register("recipe", { required: true })}
 								className="h-24 textarea textarea-bordered"
 								placeholder="Bio"
 							></textarea>

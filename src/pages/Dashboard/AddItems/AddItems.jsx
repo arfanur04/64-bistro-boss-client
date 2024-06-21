@@ -6,14 +6,24 @@ import { FaUtensils } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useState } from "react";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddItems = () => {
-	const { register, handleSubmit, reset } = useForm();
+	const [uploadImage, setUploadImage] = useState(null);
 	const axiosSecure = useAxiosSecure();
 
+	const handleFileChange = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			const imageUrl = URL.createObjectURL(file);
+			setUploadImage(imageUrl);
+		}
+	};
+
+	const { register, handleSubmit, reset } = useForm();
 	const onSubmit = async (data) => {
 		try {
 			console.log("hook form", data);
@@ -33,7 +43,6 @@ const AddItems = () => {
 					name: data.name,
 					recipe: data.recipe,
 					image: res.data.data.display_url,
-					delete_url: res.data.data.delete_url,
 					category: data.category,
 					price: +data.price,
 					//
@@ -49,6 +58,8 @@ const AddItems = () => {
 
 				if (menuRes.data.insertedId) {
 					// show success message
+					reset();
+					setUploadImage(null);
 					Swal.fire({
 						position: "top-end",
 						icon: "success",
@@ -56,13 +67,13 @@ const AddItems = () => {
 						showConfirmButton: false,
 						timer: 1500,
 					});
-					reset();
 				}
 			}
 		} catch (error) {
 			console.error("error: ", error);
 		}
 	};
+
 	return (
 		<>
 			<Helmet>
@@ -134,14 +145,22 @@ const AddItems = () => {
 								placeholder="Bio"
 							></textarea>
 						</label>
+						<div className="flex items-center gap-6 mb-2">
+							<img
+								className="w-24"
+								src={uploadImage}
+								alt=""
+							/>
+						</div>
 						<div className="w-full my-6 form-control">
 							<input
 								{...register("image", { required: true })}
 								type="file"
+								onChange={handleFileChange}
 								className="w-full max-w-xs file-input"
 							/>
 						</div>
-						<button className="btn">
+						<button className="btn btn-outline">
 							Add Item <FaUtensils className="ml-4" />
 						</button>
 					</form>
