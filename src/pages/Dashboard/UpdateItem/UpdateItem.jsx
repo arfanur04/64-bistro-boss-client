@@ -19,7 +19,11 @@ const UpdateItem = () => {
 	const axiosPublic = useAxiosPublic();
 	const axiosSecure = useAxiosSecure();
 
-	const { data: item = {}, refetch } = useQuery({
+	const {
+		data: item = {},
+		isLoading,
+		refetch,
+	} = useQuery({
 		queryKey: ["update-item"],
 		queryFn: async () => {
 			const res = await axiosPublic.get(`/menu/${id}`);
@@ -27,7 +31,6 @@ const UpdateItem = () => {
 		},
 	});
 	const { _id, name, category, recipe, price, image } = item;
-	refetch();
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -37,7 +40,7 @@ const UpdateItem = () => {
 		}
 	};
 
-	const { register, handleSubmit, reset } = useForm();
+	const { register, handleSubmit } = useForm();
 	const onSubmit = async (data) => {
 		try {
 			console.log("hook form", data);
@@ -73,9 +76,11 @@ const UpdateItem = () => {
 
 				if (menuRes.data.modifiedCount > 0) {
 					// show success message
-					reset();
-					setUpdateImage(null);
-					refetch();
+					// reset();
+					const refetchAwait = await refetch();
+					if (refetchAwait.status === "success") {
+						setUpdateImage(null);
+					}
 					Swal.fire({
 						position: "top-end",
 						icon: "success",
@@ -101,86 +106,88 @@ const UpdateItem = () => {
 					subHeading={"Update Info"}
 				/>
 				<div>
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<label className="w-full my-6 form-control">
-							<div className="label">
-								<span className="label-text">Recipe Name*</span>
-							</div>
-							<input
-								{...register("name", { required: true })}
-								type="text"
-								defaultValue={name}
-								placeholder="Type here"
-								className="w-full input input-bordered"
-							/>
-						</label>
-						<div className="flex gap-6">
-							{/* category */}
+					{!isLoading && (
+						<form onSubmit={handleSubmit(onSubmit)}>
 							<label className="w-full my-6 form-control">
 								<div className="label">
-									<span className="label-text">Category*</span>
-								</div>
-								<select
-									defaultValue={category}
-									{...register("category", { required: true })}
-									className="w-full select select-bordered"
-								>
-									<option
-										disabled
-										value={""}
-									>
-										Select a category
-									</option>
-									<option value={"salad"}>Salad</option>
-									<option value={"pizza"}>Pizza</option>
-									<option value={"soup"}>Soup</option>
-									<option value={"dessert"}>Dessert</option>
-									<option value={"drinks"}>Drinks</option>
-								</select>
-							</label>
-							{/* price */}
-							<label className="w-full my-6 form-control">
-								<div className="label">
-									<span className="label-text">Price*</span>
+									<span className="label-text">Recipe Name*</span>
 								</div>
 								<input
-									{...register("price", { required: true })}
-									type="number"
-									defaultValue={price}
+									{...register("name", { required: true })}
+									type="text"
+									defaultValue={name}
 									placeholder="Type here"
 									className="w-full input input-bordered"
 								/>
 							</label>
-						</div>
-						{/* recipe details */}
-						<label className="w-full my-6 form-control">
-							<div className="label">
-								<span className="label-text">Recipe Details</span>
+							<div className="flex gap-6">
+								{/* category */}
+								<label className="w-full my-6 form-control">
+									<div className="label">
+										<span className="label-text">Category*</span>
+									</div>
+									<select
+										defaultValue={category}
+										{...register("category", { required: true })}
+										className="w-full select select-bordered"
+									>
+										<option
+											disabled
+											value={""}
+										>
+											Select a category
+										</option>
+										<option value={"salad"}>Salad</option>
+										<option value={"pizza"}>Pizza</option>
+										<option value={"soup"}>Soup</option>
+										<option value={"dessert"}>Dessert</option>
+										<option value={"drinks"}>Drinks</option>
+									</select>
+								</label>
+								{/* price */}
+								<label className="w-full my-6 form-control">
+									<div className="label">
+										<span className="label-text">Price*</span>
+									</div>
+									<input
+										{...register("price", { required: true })}
+										type="number"
+										defaultValue={price}
+										placeholder="Type here"
+										className="w-full input input-bordered"
+									/>
+								</label>
 							</div>
-							<textarea
-								defaultValue={recipe}
-								{...register("recipe", { required: true })}
-								className="h-24 textarea textarea-bordered"
-								placeholder="Bio"
-							></textarea>
-						</label>
-						<div className="w-full my-6 form-control">
-							<div className="flex items-center gap-6 mb-2">
-								<img
-									className="w-24"
-									src={updateImage ? updateImage : image}
-									alt=""
+							{/* recipe details */}
+							<label className="w-full my-6 form-control">
+								<div className="label">
+									<span className="label-text">Recipe Details</span>
+								</div>
+								<textarea
+									defaultValue={recipe}
+									{...register("recipe", { required: true })}
+									className="h-24 textarea textarea-bordered"
+									placeholder="Bio"
+								></textarea>
+							</label>
+							<div className="w-full my-6 form-control">
+								<div className="flex items-center gap-6 mb-2">
+									<img
+										className="w-24"
+										src={updateImage ? updateImage : image}
+										alt=""
+									/>
+								</div>
+								<input
+									{...register("image", { required: true })}
+									type="file"
+									onChange={handleFileChange}
+									className="w-full max-w-xs file-input"
 								/>
 							</div>
-							<input
-								{...register("image", { required: true })}
-								type="file"
-								onChange={handleFileChange}
-								className="w-full max-w-xs file-input"
-							/>
-						</div>
-						<button className="btn btn-outline">Update Menu Item</button>
-					</form>
+							<button className="btn btn-outline">Update Menu Item</button>
+						</form>
+					)}
 				</div>
 			</div>
 		</>
