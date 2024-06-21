@@ -16,7 +16,6 @@ import HomeRoute from "./HomeRoute";
 import ErrorPage from "../pages/Shared/ErrorPage/ErrorPage";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
-import { apiURL } from "../utility/utility";
 
 export const router = createBrowserRouter([
 	{
@@ -100,7 +99,7 @@ export const router = createBrowserRouter([
 						<UpdateItem />
 					</AdminRoute>
 				),
-				loader: ({ params }) => fetch(`${apiURL}/menu/${params.id}`),
+				// loader: ({ params }) => fetch(`${apiURL}/menu/${params.id}`),
 			},
 			{
 				path: "users",

@@ -1,19 +1,42 @@
 import { Helmet } from "react-helmet-async";
 import { websiteTitle } from "../../../utility/utility";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useState } from "react";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const UpdateItem = () => {
-	const { _id, name, category, recipe, price, image } = useLoaderData();
+	const [updateImage, setUpdateImage] = useState(null);
+	const { id } = useParams();
+	const axiosPublic = useAxiosPublic();
 	const axiosSecure = useAxiosSecure();
-	const { register, handleSubmit } = useForm();
+
+	const { data: item = {}, refetch } = useQuery({
+		queryKey: ["update-item"],
+		queryFn: async () => {
+			const res = await axiosPublic.get(`/menu/${id}`);
+			return res.data;
+		},
+	});
+	const { _id, name, category, recipe, price, image } = item;
+
+	const handleFileChange = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			const imageUrl = URL.createObjectURL(file);
+			setUpdateImage(imageUrl);
+		}
+	};
+
+	const { register, handleSubmit, reset } = useForm();
 
 	const onSubmit = async (data) => {
 		try {
@@ -51,7 +74,9 @@ const UpdateItem = () => {
 
 				if (menuRes.data.modifiedCount > 0) {
 					// show success message
-					// reset();
+					reset();
+					setUpdateImage(null);
+					refetch();
 					Swal.fire({
 						position: "top-end",
 						icon: "success",
@@ -142,16 +167,16 @@ const UpdateItem = () => {
 						</label>
 						<div className="w-full my-6 form-control">
 							<div className="flex items-center gap-6 mb-2">
-								<p className="font-semibold text-md">Previous Image:</p>
 								<img
 									className="w-24"
-									src={image}
+									src={updateImage ? updateImage : image}
 									alt=""
 								/>
 							</div>
 							<input
 								{...register("image", { required: true })}
 								type="file"
+								onChange={handleFileChange}
 								className="w-full max-w-xs file-input"
 							/>
 						</div>
