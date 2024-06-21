@@ -147,7 +147,7 @@ const AddItems = () => {
 						</label>
 						<div className="flex items-center gap-6 mb-2">
 							<img
-								className="w-24"
+								className="h-24"
 								src={uploadImage}
 								alt=""
 							/>

@@ -173,7 +173,7 @@ const UpdateItem = () => {
 							<div className="w-full my-6 form-control">
 								<div className="flex items-center gap-6 mb-2">
 									<img
-										className="w-24"
+										className="h-24"
 										src={updateImage ? updateImage : image}
 										alt=""
 									/>
