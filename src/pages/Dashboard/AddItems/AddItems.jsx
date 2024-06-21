@@ -33,6 +33,7 @@ const AddItems = () => {
 					name: data.name,
 					recipe: data.recipe,
 					image: res.data.data.display_url,
+					delete_url: res.data.data.delete_url,
 					category: data.category,
 					price: +data.price,
 					//

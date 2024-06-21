@@ -13,7 +13,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const UpdateItem = () => {
 	const { _id, name, category, recipe, price, image } = useLoaderData();
 	const axiosSecure = useAxiosSecure();
-	const { register, handleSubmit, reset } = useForm();
+	const { register, handleSubmit } = useForm();
 
 	const onSubmit = async (data) => {
 		try {
@@ -35,6 +35,7 @@ const UpdateItem = () => {
 					name: data.name,
 					recipe: data.recipe,
 					image: res.data.data.display_url,
+					delete_url: res.data.data.delete_url,
 					category: data.category,
 					price: +data.price,
 					//
@@ -50,6 +51,7 @@ const UpdateItem = () => {
 
 				if (menuRes.data.modifiedCount > 0) {
 					// show success message
+					// reset();
 					Swal.fire({
 						position: "top-end",
 						icon: "success",
@@ -57,7 +59,6 @@ const UpdateItem = () => {
 						showConfirmButton: false,
 						timer: 1500,
 					});
-					reset();
 				}
 			}
 		} catch (error) {
