@@ -16,6 +16,7 @@ import HomeRoute from "./HomeRoute";
 import ErrorPage from "../pages/Shared/ErrorPage/ErrorPage";
 import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
 	{
@@ -70,12 +71,16 @@ export const router = createBrowserRouter([
 		),
 		errorElement: <ErrorPage />,
 		children: [
-			// normal user routes
+			//: normal user routes
 			{
 				path: "cart",
 				element: <Cart />,
 			},
-			// admin only routes
+			{
+				path: "payment",
+				element: <Payment />,
+			},
+			//: admin only routes
 			{
 				path: "addItems",
 				element: (
