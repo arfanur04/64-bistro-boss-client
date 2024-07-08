@@ -13,11 +13,11 @@ import {
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAdmin from "../hooks/useAdmin";
-import useCarts from "../hooks/useCarts";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
 	const { logOut } = useAuth();
-	const [cart] = useCarts();
+	const [cart] = useCart();
 	const navigate = useNavigate();
 
 	// todo: get isAdmin value from the database
@@ -26,7 +26,7 @@ const Dashboard = () => {
 	return (
 		<div className="flex">
 			{/* Dashboard sidebar */}
-			<div className="w-64 min-h-svh bg-orange-400">
+			<div className="w-64 bg-orange-400 min-h-svh">
 				<ul className="menu">
 					{isAdmin ? (
 						/* ------------------------------- admin user */
@@ -122,6 +122,12 @@ const Dashboard = () => {
 							<NavLink to={"/order/salad"}>
 								<FaEnvelope />
 								Contact (order food)
+							</NavLink>
+						</li>
+						<li>
+							<NavLink to={"/dashboard/cart"}>
+								<FaEnvelope />
+								Cart (Temporary)
 							</NavLink>
 						</li>
 						<li

@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { FaShoppingCart } from "react-icons/fa";
-import useCarts from "../../../hooks/useCarts";
+import useCart from "../../../hooks/useCart";
 
 const NavBar = () => {
 	const { user, logOut } = useContext(AuthContext);
 	// custom hooks
-	const [cart] = useCarts();
+	const [cart] = useCart();
 
 	const handleLogOut = () => {
 		logOut()

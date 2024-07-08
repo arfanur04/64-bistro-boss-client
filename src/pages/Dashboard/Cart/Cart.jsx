@@ -1,11 +1,11 @@
 import { FaTrash } from "react-icons/fa6";
-import useCarts from "../../../hooks/useCarts";
+import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-	const [cart, refetch] = useCarts();
+	const [cart, refetch] = useCart();
 	const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 	const axiosSecure = useAxiosSecure();
 

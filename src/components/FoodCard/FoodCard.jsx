@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useCarts from "../../hooks/useCarts";
+import useCart from "../../hooks/useCart";
 
 const FoodCard = ({ item }) => {
 	const { name, image, price, recipe, _id } = item;
@@ -12,7 +12,7 @@ const FoodCard = ({ item }) => {
 	// custom hooks
 	const { user } = useAuth();
 	const axiosSecure = useAxiosSecure();
-	const [, refetch] = useCarts();
+	const [, refetch] = useCart();
 
 	const handleAddToCart = () => {
 		if (user && user.email) {
