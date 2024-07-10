@@ -25,7 +25,12 @@ const Cart = () => {
 					.delete(`/carts/${id}`)
 					.then((res) => {
 						if (res.data.deletedCount > 0) {
-							Swal.fire("Deleted!", "Your file has been deleted.", "success");
+							Swal.fire({
+								icon: "success",
+								title: "Item deleted successfully",
+								showConfirmButton: false,
+								timer: 1500,
+							});
 							refetch();
 						}
 					})
