@@ -50,9 +50,23 @@ const UpdateItem = () => {
 	const onSubmit = async (data) => {
 		try {
 			console.log("hook form", data);
+			if (
+				name === data.name &&
+				category === data.category &&
+				recipe === data.recipe &&
+				price === +data.price &&
+				!updateImage
+			) {
+				Swal.fire({
+					icon: "warning",
+					title: `Nothing to be changed`,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				return;
+			}
 			// image upload to ImgBB and then get the url
 			const imageFile = { image: data.image[0] };
-
 			let res;
 			if (updateImage) {
 				res = await axios.post(image_hosting_api, imageFile, {
@@ -86,9 +100,9 @@ const UpdateItem = () => {
 					const refetchAwait = await refetch();
 					if (refetchAwait.status === "success") {
 						reset({
-							image: "", // clear name from ui
+							image: "",
 						});
-						setUpdateImage(null); // clear image from ui
+						setUpdateImage(null);
 					}
 					Swal.fire({
 						position: "top-end",
