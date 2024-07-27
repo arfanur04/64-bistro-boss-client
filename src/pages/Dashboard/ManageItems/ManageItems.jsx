@@ -41,7 +41,7 @@ const ManageItems = () => {
 				}
 			});
 		} catch (error) {
-			console.error("error: ", error);
+			console.log("error: ", error);
 			Swal.fire({
 				icon: "error",
 				title: "Oops ...",
@@ -55,7 +55,7 @@ const ManageItems = () => {
 	// 		console.log(item);
 	// 		// const res = await axiosSecure.patch(`/menu/${item._id}`);
 	// 	} catch (error) {
-	// 		console.error("error: ", error);
+	// 		console.log("error: ", error);
 	// 		Swal.fire({
 	// 			icon: "error",
 	// 			title: "Oops ...",

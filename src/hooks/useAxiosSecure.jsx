@@ -40,7 +40,10 @@ const useAxiosSecure = () => {
 				// 	.then(() => {
 				// 		navigate("/login");
 				// 	})
-				// 	.catch((error) => console.error("error: ", error));
+				// 	.catch((error) => console.log("error: ", error));
+			}
+			if (status === 500) {
+				setLoading(false);
 			}
 
 			return Promise.reject(error);

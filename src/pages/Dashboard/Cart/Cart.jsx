@@ -35,7 +35,7 @@ const Cart = () => {
 						}
 					})
 					.catch((error) => {
-						console.error("error: ", error);
+						console.log("error: ", error);
 						Swal.fire({
 							icon: "error",
 							title: "Oops...",

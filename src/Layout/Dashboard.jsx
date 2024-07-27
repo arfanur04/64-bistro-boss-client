@@ -134,7 +134,7 @@ const Dashboard = () => {
 							onClick={() => {
 								logOut()
 									.then(() => navigate("/"))
-									.catch((error) => console.error("error: ", error));
+									.catch((error) => console.log("error: ", error));
 							}}
 						>
 							<div>

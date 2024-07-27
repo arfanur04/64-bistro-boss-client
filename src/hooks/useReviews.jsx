@@ -7,7 +7,12 @@ const useReviews = () => {
 
 	useEffect(() => {
 		fetch(`${apiURL}/reviews`)
-			.then((res) => res.json())
+			.then((res) => {
+				if (res.status === 500) {
+					setLoading(false);
+				}
+				res.json();
+			})
 			.then((data) => {
 				setReviews(data);
 				setLoading(false);

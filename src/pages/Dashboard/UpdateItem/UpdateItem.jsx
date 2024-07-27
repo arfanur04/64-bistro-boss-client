@@ -114,7 +114,7 @@ const UpdateItem = () => {
 				}
 			}
 		} catch (error) {
-			console.error("error: ", error);
+			console.log("error: ", error);
 		}
 	};
 

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SocialLogin = () => {
-	const { googleSignIn } = useAuth();
+	const { setLoading, googleSignIn } = useAuth();
 	const axiosPublic = useAxiosPublic();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -31,12 +31,13 @@ const SocialLogin = () => {
 				});
 			})
 			.catch((error) => {
-				console.error("error: ", error.message);
+				console.log("error: ", error.message);
 				Swal.fire({
 					icon: "error",
 					title: "Oops...",
 					text: `${error.message}`,
 				});
+				setLoading(false);
 			});
 	};
 

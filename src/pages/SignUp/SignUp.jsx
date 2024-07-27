@@ -7,9 +7,11 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { websiteTitle } from "../../utility/utility";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
 	const axiosPublic = useAxiosPublic();
+	const { setLoading } = useAuth();
 	const { createUser, updateUserProfile } = useContext(AuthContext);
 	const navigate = useNavigate();
 
@@ -56,15 +58,16 @@ const SignUp = () => {
 						// 	.then(() => {
 						// 		navigate("/login");
 						// 	})
-						// 	.catch((error) => console.error("error: ", error));
+						// 	.catch((error) => console.log("error: ", error));
 					})
 					.catch((error) => {
-						console.error("error: ", error);
+						console.log("error: ", error);
 						Swal.fire({
 							icon: "error",
 							title: "Oops...",
 							text: `${error.message}`,
 						});
+						setLoading(false);
 					});
 			})
 			.catch((error) => {
@@ -74,6 +77,7 @@ const SignUp = () => {
 					title: "Oops...",
 					text: `${error.message}`,
 				});
+				setLoading(false);
 			});
 	};
 

@@ -17,7 +17,7 @@ const Login = () => {
 	//: delete this useState and uncomment next one to validate reCaptcha
 	const [disabled, setDisabled] = useState(false);
 	// const [disabled, setDisabled] = useState(true);
-	const { signIn } = useContext(AuthContext);
+	const { setLoading, signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const from = location.state?.from?.pathname || "/";
@@ -68,12 +68,13 @@ const Login = () => {
 				});
 			})
 			.catch((error) => {
-				console.error("error: ", error);
+				console.log("error: ", error);
 				Swal.fire({
 					icon: "error",
 					title: "Oops...",
 					text: `${error.message}`,
 				});
+				setLoading(false);
 			});
 	};
 
